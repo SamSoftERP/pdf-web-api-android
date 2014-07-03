@@ -14,8 +14,8 @@ public class PDFWebAPISampleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfweb_apisample);
 
-        String inputFile = "http://www.datalogics.com/pdf/doc/pdf2img.pdf";
-        String decorationDataFile = "";
+        String inputFile = "sdcard/test.pdf";
+        String decorationDataFile = "sdcard/decoration.xml";
 //        String inputFilePassword = "password";
         String applicationID = "9c884313";
         String applicationKey = "7abd386711a17a13351fed584ab019ab";
