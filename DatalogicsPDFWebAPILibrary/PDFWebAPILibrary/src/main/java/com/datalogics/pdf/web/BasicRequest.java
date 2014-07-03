@@ -70,7 +70,7 @@ public class BasicRequest extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
         // create the json string for the body of the request
-        String applicationString = "\"{\\\"id\\\":\\\"" + applicationID + "\\\", \\\"key\\\":\\\"" + applicationKey + "\\\"}\"";
+        String applicationString = "\"{\"id\":\"" + applicationID + "\", \"key\":\"" + applicationKey + "\"}\"";
         Part applicationPart = new Part.Builder().body(applicationString).contentDisposition("form-data; name=\"application\"").build();
 
         // now add the application Part toe the request
