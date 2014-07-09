@@ -3,17 +3,15 @@ package com.datalogics.pdf.web;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.squareup.mimecraft.Multipart;
-import com.squareup.mimecraft.Part;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by bhaugen on 7/1/14.
@@ -69,47 +67,34 @@ public class BasicRequest extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        // create the json string for the body of the request
-        String applicationString = "\"{\"id\":\"" + applicationID + "\", \"key\":\"" + applicationKey + "\"}\"";
-        Part applicationPart = new Part.Builder().body(applicationString).contentDisposition("form-data; name=\"application\"").build();
+        if (objects[1] instanceof MultipartEntityBuilder) {
+            MultipartEntityBuilder entity = (MultipartEntityBuilder) objects[1];
 
-        // now add the application Part toe the request
-        Multipart.Builder builder = new Multipart.Builder("test")
-                .addPart(applicationPart);
+            String applicationString = "\"{\"id\":\"" + this.applicationID + "\", \"key\":\"" + this.applicationKey + "\"}\"";
 
-        // for each object that is a Part in the objects array, add the Part to the multipart request
-        for (Object object : objects) {
-            if (object instanceof Part) {
-                builder.addPart((Part) object);
+            StringBody application = null;
+            try {
+                application = new StringBody(applicationString);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-        }
 
-        // write the multipart form data to an output stream
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            builder.build().writeBodyTo(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            entity.addPart("application", application);
 
-        OkHttpClient client = new OkHttpClient();
+            HttpPost post = new HttpPost((String) objects[0]);
+            post.setEntity(entity.build());
 
-        // build the Call using the output stream from the multipart form data
-        // TODO think about ramifications of using objects[0] for passing the URL
-        Call call = client.newCall(new Request.Builder().url((String) objects[0])
-                                                        .post(RequestBody.create(MediaType.parse("multipart/form-data"), out.toByteArray()))
-                                                        .build());
-
-        Response response;
-        try {
-            // actually make the call now
-            response = call.execute();
-
-            // debugging information
-            String responseString = response.toString();
-            Log.d("RESPONSE", responseString);
-        } catch (IOException e) {
-            e.printStackTrace();
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response = null;
+            try {
+                response = httpClient.execute(post);
+                if (response != null) {
+                    Log.d("PDF WEB API", response.getStatusLine().toString());
+                    HttpEntity resEntity = response.getEntity();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // TODO return the file from the request to the user or write it out to disk somewhere and
