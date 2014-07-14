@@ -1,6 +1,7 @@
 package com.datalogics.pdf.web;
 
-import com.squareup.mimecraft.Part;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 
 import java.io.File;
 
@@ -12,24 +13,23 @@ public class DecorateDocumentRequest extends BasicRequest {
 
     public String decorationDataFile;
 
-    public DecorateDocumentRequest(String applicationID, String applicationKey, String inputFile, String decorationDataFile) {
-        super(applicationID, applicationKey, inputFile);
+    public DecorateDocumentRequest(String applicationID, String applicationKey, String inputFile, String outputFile, String decorationDataFile) {
+        super(applicationID, applicationKey, inputFile, outputFile);
 
         this.decorationDataFile = decorationDataFile;
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(Object[] objects) {
         // build the parts of the multipart form that are specific to the decorate document request
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
-        // first is the inputPart that contains the input file (the PDF) to decorate
-        Part inputPart = new Part.Builder().body(new File(inputFile)).contentDisposition("form-data; name=\"input\"").contentType("application/pdf").build();
+        entity.addPart("input", new FileBody(new File(inputFile)));
 
-        // second is the decorationPart that contains the xml file to use to decorate the PDF
-        Part decorationPart = new Part.Builder().body(new File(decorationDataFile)).contentDisposition("form-data; name=\"decorationData\"").contentType("text/xml").build();
+        entity.addPart("decorationData", new FileBody(new File(decorationDataFile)));
 
         // create a new objects array to pass the info we need to down to the BasicRequest class
-        objects = new Object[] {BasicRequest.WEB_API_URL + REQUEST_PATH, inputPart, decorationPart};
+        objects = new Object[] {BasicRequest.WEB_API_URL + REQUEST_PATH, entity};
 
         // Then call BasicRequest.doInBackground
         return super.doInBackground(objects);
