@@ -13,14 +13,14 @@ public class DecorateDocumentRequest extends BasicRequest {
 
     public String decorationDataFile;
 
-    public DecorateDocumentRequest(String applicationID, String applicationKey, String inputFile, String decorationDataFile) {
-        super(applicationID, applicationKey, inputFile);
+    public DecorateDocumentRequest(String applicationID, String applicationKey, String inputFile, String outputFile, String decorationDataFile) {
+        super(applicationID, applicationKey, inputFile, outputFile);
 
         this.decorationDataFile = decorationDataFile;
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(Object[] objects) {
         // build the parts of the multipart form that are specific to the decorate document request
         MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 

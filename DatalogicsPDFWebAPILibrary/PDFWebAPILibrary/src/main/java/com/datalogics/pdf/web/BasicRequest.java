@@ -10,7 +10,12 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -26,11 +31,15 @@ public class BasicRequest extends AsyncTask {
     String inputFile;
     String inputFilePassword;
 
-    public BasicRequest(String applicationID, String applicationKey, String inputFile) {
+    String outputFile;
+
+    public BasicRequest(String applicationID, String applicationKey, String inputFile, String outputFile) {
         this.applicationID = applicationID;
         this.applicationKey = applicationKey;
 
         this.inputFile = inputFile;
+
+        this.outputFile = outputFile;
     }
 
     public String getApplicationID() {
@@ -66,7 +75,8 @@ public class BasicRequest extends AsyncTask {
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(Object[] objects) {
+        String responseStatus = null;
         if (objects[1] instanceof MultipartEntityBuilder) {
             MultipartEntityBuilder entity = (MultipartEntityBuilder) objects[1];
 
@@ -86,19 +96,59 @@ public class BasicRequest extends AsyncTask {
 
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = null;
+
             try {
                 response = httpClient.execute(post);
-                if (response != null) {
-                    Log.d("PDF WEB API", response.getStatusLine().toString());
-                    HttpEntity resEntity = response.getEntity();
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            if (response != null) {
+                responseStatus = response.getStatusLine().toString();
+                Log.d("PDF WEB API", responseStatus);
+
+                processResponse(response);
+            }
         }
 
-        // TODO return the file from the request to the user or write it out to disk somewhere and
-        // return the path to the user?
-        return null;
+        return responseStatus;
+    }
+
+    private void processResponse(HttpResponse response) {
+        if (response.getStatusLine().getStatusCode() == 200) {
+            // get the response and write the file out to disk
+            HttpEntity resEntity = response.getEntity();
+            if (resEntity != null) {
+                InputStream resStream = null;
+                try {
+                    resStream = resEntity.getContent();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                writeFileToDisk(resStream);
+            }
+        }
+    }
+
+    private void writeFileToDisk(InputStream resStream) {
+        // write the inputStream to a FileOutputStream
+        OutputStream outputStream =
+                null;
+        try {
+            outputStream = new FileOutputStream(new File(outputFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        int read = 0;
+        byte[] bytes = new byte[1024];
+
+        try {
+            while ((read = resStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

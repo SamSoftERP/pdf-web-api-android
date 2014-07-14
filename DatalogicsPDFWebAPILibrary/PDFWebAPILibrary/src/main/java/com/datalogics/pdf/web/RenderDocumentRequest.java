@@ -10,12 +10,12 @@ import java.io.File;
  */
 public class RenderDocumentRequest extends BasicRequest {
     final static String REQUEST_PATH = "render/pages";
-    public RenderDocumentRequest(String applicationID, String applicationKey, String inputFile) {
-        super(applicationID, applicationKey, inputFile);
+    public RenderDocumentRequest(String applicationID, String applicationKey, String inputFile, String outputFile) {
+        super(applicationID, applicationKey, inputFile, outputFile);
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(Object[] objects) {
         // build the parts of the multipart form that are specific to the decorate document request
 
         // first is the inputPart that contains the input file (the PDF) to decorate
