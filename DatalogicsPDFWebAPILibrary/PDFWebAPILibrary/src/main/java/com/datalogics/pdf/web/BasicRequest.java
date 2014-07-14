@@ -70,7 +70,7 @@ public class BasicRequest extends AsyncTask {
         if (objects[1] instanceof MultipartEntityBuilder) {
             MultipartEntityBuilder entity = (MultipartEntityBuilder) objects[1];
 
-            String applicationString = "\"{\"id\":\"" + this.applicationID + "\", \"key\":\"" + this.applicationKey + "\"}\"";
+            String applicationString = "{\"id\":\"" + this.applicationID + "\", \"key\":\"" + this.applicationKey + "\"}";
 
             StringBody application = null;
             try {
