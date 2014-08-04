@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Javadoc" pattern="src[PDFWebAPILibrary]:com.datalogics.pdf.web.*&amp;&amp;!src[PDFWebAPILibrary]:com.datalogics.pdf.web.BuildConfig&amp;&amp;!src[PDFWebAPILibrary]:com.datalogics.pdf.web.R" />
-</component>

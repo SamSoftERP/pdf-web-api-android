@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">Datalogics PDF Web API Library</string>
-    <string name="title_activity_pdfweb_apisample">PDFWebAPISampleActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-</resources>
