@@ -18,8 +18,8 @@ public class PDFWebAPISampleActivity extends Activity {
         String decorationDataFile = "sdcard/decoration.xml";
         String outputTXTFile = "sdcard/test_output.txt";
 //        String inputFilePassword = "password";
-        String applicationID = "***REMOVED***";
-        String applicationKey = "***REMOVED***";
+        String applicationID = "9c884313";
+        String applicationKey = "7abd386711a17a13351fed584ab019ab";
 
         // Invoke a PDF Web API to do something by using an Async Task
         DecorateDocumentRequest webAPITask = new DecorateDocumentRequest(applicationID, applicationKey, inputFile, decorationDataFile);
