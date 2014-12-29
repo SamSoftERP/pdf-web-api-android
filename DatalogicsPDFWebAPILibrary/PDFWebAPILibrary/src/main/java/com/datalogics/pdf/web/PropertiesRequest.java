@@ -16,6 +16,15 @@ public class PropertiesRequest extends BasicRequest {
 
     public String requestedInfo;
 
+    // If requestedInfo is not provided it will default to an empty string, and all of the
+    // document's information will be requested.
+    public PropertiesRequest(String applicationID, String applicationKey, String inputFile, String outputFile){
+        super(applicationID, applicationKey, inputFile, outputFile);
+
+        this.requestedInfo = "";
+    }
+
+    // requestedInfo can be specified to request specific pieces of information about the document.
     public PropertiesRequest(String applicationID, String applicationKey, String inputFile, String outputFile, String requestedInfo){
         super(applicationID, applicationKey, inputFile, outputFile);
 
