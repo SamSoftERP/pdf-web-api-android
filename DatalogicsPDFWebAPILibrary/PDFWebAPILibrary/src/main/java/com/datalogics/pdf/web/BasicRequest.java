@@ -20,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * Created by bhaugen on 7/1/14.
+ *
+ * This is the basic request template on top of which all other request types are built.
  */
 public class BasicRequest extends AsyncTask {
 

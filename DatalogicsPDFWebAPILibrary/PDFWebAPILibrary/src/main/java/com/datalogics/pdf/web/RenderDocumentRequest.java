@@ -7,6 +7,9 @@ import java.io.File;
 
 /**
  * Created by bhaugen on 7/3/14.
+ *
+ * This class allows the user to create and send a request to the PDF Web API to convert a document
+ * as described by https://api.datalogics-cloud.com/docs#renderpages
  */
 public class RenderDocumentRequest extends BasicRequest {
     final static String REQUEST_PATH = "render/pages";

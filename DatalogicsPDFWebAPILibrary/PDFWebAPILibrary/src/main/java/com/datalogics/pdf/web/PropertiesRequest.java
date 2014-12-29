@@ -7,6 +7,9 @@ import java.io.File;
 
 /**
  * Created by tsmith on 12/24/14.
+ *
+ * This class allows the user to create and send a request to the PDF Web API to get the properties
+ * of a document as described by https://api.datalogics-cloud.com/docs#documentproperties
  */
 public class PropertiesRequest extends BasicRequest {
     final static String REQUEST_PATH = "retrieve/document/properties";
