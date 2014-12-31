@@ -31,13 +31,6 @@ public class PDFWebAPISampleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfweb_apisample);
 
-        String inputFile = "sdcard/test.pdf";
-        String decorationDataFile = "sdcard/decoration.xml";
-        String outputTXTFile = "sdcard/test_output.txt";
-        String outputPDFFile = "sdcard/test_output.pdf";
-//        String inputFilePassword = "password";
-        String applicationID = "";
-        String applicationKey = "";
         final TextView extra1Tag = (TextView) findViewById(R.id.extraTextView1);
         final TextView extra2Tag = (TextView) findViewById(R.id.extraTextView2);
         final EditText extra1TextField = (EditText) findViewById(R.id.extraTextField1);
@@ -99,12 +92,36 @@ public class PDFWebAPISampleActivity extends Activity {
             }
         });
 
-        // Invoke a PDF Web API to do something by using an Async Task
-        DecorateDocumentRequest webAPITask = new DecorateDocumentRequest(applicationID, applicationKey, inputFile, outputPDFFile, decorationDataFile);
+        Button button = (Button) findViewById(R.id.requestButton);
+        button.setOnClickListener(new OnClickListener() {
 
-        webAPITask.execute();
-        PropertiesRequest webAPIPropertiesTask = new PropertiesRequest(applicationID, applicationKey, inputFile, outputTXTFile, "");
-        webAPIPropertiesTask.execute();
+            public void onClick(View v) {
+                String inputFile = ((EditText)findViewById(R.id.inputFileTextField)).getText().toString();
+                String outputFile = ((EditText)findViewById(R.id.outputFileTextField)).getText().toString();
+
+                String applicationID = "";
+                String applicationKey = "";
+
+                switch (currentRequestType) {
+                    case RENDER:
+                        RenderDocumentRequest renderRequest = new RenderDocumentRequest(applicationID, applicationKey, inputFile, outputFile);
+                        renderRequest.execute();
+                       break;
+
+                    case PROPERTIES:
+                        String requestedInfo = ((EditText)findViewById(R.id.extraTextField1)).getText().toString();
+                        PropertiesRequest propertiesRequest = new PropertiesRequest(applicationID, applicationKey, inputFile, outputFile, requestedInfo);
+                        propertiesRequest.execute();
+                        break;
+
+                    case DECORATE:
+
+                        // TODO
+                        break;
+                }
+
+            }
+        });
     }
 
 
