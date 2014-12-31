@@ -17,11 +17,9 @@ public class PDFWebAPISampleActivity extends Activity {
         setContentView(R.layout.activity_pdfweb_apisample);
 
         String inputFile = "sdcard/test.pdf";
-        String decorationDataFile = "sdcard/decoration.json";
-        String imageSettingsFile = "sdcard/imageSettings.json";
-        String outputTXTFile = "sdcard/testOutputTXT.txt";
-        String outputPDFFile = "sdcard/testOutputPDF.pdf";
-        String inputImageFile = "sdcard/testImage.jpg";
+        String decorationDataFile = "sdcard/decoration.xml";
+        String outputTXTFile = "sdcard/test_output.txt";
+        String outputPDFFile = "sdcard/test_output.pdf";
 //        String inputFilePassword = "password";
         String applicationID = "";
         String applicationKey = "";
