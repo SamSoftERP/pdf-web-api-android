@@ -21,7 +21,8 @@ public class PDFWebAPISampleActivity extends Activity {
     enum RequestType {
         RENDER,
         DECORATE,
-        PROPERTIES
+        PROPERTIES,
+        ADD_IMAGE
     }
 
     RequestType currentRequestType = RequestType.RENDER;
@@ -92,6 +93,8 @@ public class PDFWebAPISampleActivity extends Activity {
             }
         });
 
+        //TODO: add structure to allow the user to make a request to add an image.
+
         Button button = (Button) findViewById(R.id.requestButton);
         button.setOnClickListener(new OnClickListener() {
 
@@ -116,7 +119,12 @@ public class PDFWebAPISampleActivity extends Activity {
 
                     case DECORATE:
 
-                        // TODO
+                        // TODO: implement document decorator request
+                        break;
+
+                    case ADD_IMAGE:
+
+                        // TODO: implement image add request
                         break;
                 }
 
