@@ -9,12 +9,6 @@
     tools:context="com.datalogics.pdf.web.sample.PDFWebAPISampleActivity">
 
     <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/input_file"
@@ -27,7 +21,6 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="84dp"
@@ -71,9 +64,7 @@
         android:text="@string/output_file"
         android:id="@+id/textView2"
         android:layout_marginTop="39dp"
-        android:layout_below="@+id/inputFileTextView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_below="@+id/inputFileTextView" />
 
     <TextView
         android:layout_width="wrap_content"
